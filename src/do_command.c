@@ -195,6 +195,11 @@ static int child_process(entry * e, char **jobenv) {
 			char *x = mkprints((u_char *) e->cmd, strlen(e->cmd));
 
 			log_it(usernm, getpid(), "CMD", x, 0);
+
+            char cronmsg[4096];
+            memset(cronmsg, 0, sizeof(cronmsg));
+            snprintf(cronmsg, sizeof(cronmsg)-1, "%s %d %s %s", usernm, getpid(), "CMD", x);
+            cron_log(cronmsg);
 			free(x);
 		}
 
@@ -505,6 +510,11 @@ static int child_process(entry * e, char **jobenv) {
 						else
 							logbuf[bufidx] = '\0';
 						log_it(usernm, getpid(), "CMDOUT", logbuf, 0);
+
+                        char cronmsg[4096];
+                        memset(cronmsg, 0, sizeof(cronmsg));
+                        snprintf(cronmsg, sizeof(cronmsg)-1, "%s %d %s %s", usernm, getpid(), "CMDOUT", logbuf);
+                        cron_log(cronmsg);
 						bufidx = 0;
 					}
 				}
@@ -529,6 +539,11 @@ static int child_process(entry * e, char **jobenv) {
 				if (bufidx) {
 					logbuf[bufidx] = '\0';
 					log_it(usernm, getpid(), "CMDOUT", logbuf, 0);
+
+                    char cronmsg[4096];
+                    memset(cronmsg, 0, sizeof(cronmsg));
+                    snprintf(cronmsg, sizeof(cronmsg)-1, "%s %d %s %s", usernm, getpid(), "CMDOUT", logbuf);
+                    cron_log(cronmsg);
 				}
 			}
 #endif

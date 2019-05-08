@@ -4,7 +4,7 @@ sbin_PROGRAMS = crond
 bin_PROGRAMS = crontab
 
 crond_SOURCES = \
-	cron.c database.c user.c job.c do_command.c popen.c \
+	cron.c database.c user.c job.c do_command.c popen.c log.c \
 	$(common_src)
 crontab_SOURCES = crontab.c $(common_src)
 common_src = entry.c env.c misc.c pw_dup.c security.c \

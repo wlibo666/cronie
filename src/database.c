@@ -233,6 +233,11 @@ process_crontab(const char *uname, const char *fname, const char *tabname,
 			unlink_user(old_db, u);
 		free_user(u);
 		log_it(fname, getpid(), "RELOAD", tabname, 0);
+
+        char cronmsg[4096];
+        memset(cronmsg, 0, sizeof(cronmsg));
+        snprintf(cronmsg, sizeof(cronmsg)-1, "%s %d %s %s", fname, getpid(), "RELOAD", tabname);
+        cron_log(cronmsg);
 	}
 
 	u = load_user(crontab_fd, pw, uname, fname, tabname);	/* read the file */
